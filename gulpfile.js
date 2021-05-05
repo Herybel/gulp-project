@@ -39,8 +39,8 @@ function images () {
 
 function scripts() {
     return src([
-        // Скрипты JS
-        'node_modules/jquery/dist/jquery.js',
+        // Скрипты JS // 'node_modules/jquery/dist/jquery.js'
+        
         // Последний файл main.js ()
         'project/js/main.js',
     ])

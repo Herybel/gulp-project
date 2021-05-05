@@ -1,6 +1,10 @@
-@import 'nav';
-
-header{
-    display: flex;
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
 }
 
+head {
+    margin: 0;
+    padding: 0;
+}
