@@ -51,10 +51,21 @@ function scripts() {
 }
 
 
-function styles() { //Файл стилей *настройки
+function stylesmin() { //Файл стилей *настройки 
     return src('project/scss/style.scss')
         .pipe(scss({outputStyle: 'compressed'}))
         .pipe(concat('style.min.css'))
+        .pipe(autoprefixer({
+            overrideBrowserslist: ['last 10 version'],
+            grid: true
+        }))
+        .pipe(dest('project/css'))
+        .pipe(browserSync.stream())
+}
+function styles() { //Файл стилей *настройки 
+    return src('project/scss/style.scss')
+        .pipe(scss({outputStyle: 'expanded'}))
+        .pipe(concat('style.css'))
         .pipe(autoprefixer({
             overrideBrowserslist: ['last 10 version'],
             grid: true
@@ -74,11 +85,13 @@ function build () {
 }
 
 function watching() { //Смотрящий за правками в файлах
+    watch(['project/scss/**/*.scss'], stylesmin);
     watch(['project/scss/**/*.scss'], styles);
     watch(['project/js/**/*.js','!project/js/main.min.js'], scripts);
     watch(['project/*.html']).on('change', browserSync.reload);
 }
 
+exports.stylesmin = stylesmin;
 exports.styles = styles;
 exports.watching = watching;
 exports.browsersync = browsersync;
@@ -87,4 +100,4 @@ exports.images = images;
 exports.cleanDist = cleanDist;
 
 exports.build = series(cleanDist, images, build);
-exports.default = parallel(styles, scripts, browsersync, watching);
+exports.default = parallel(stylesmin, styles, scripts, browsersync, watching);

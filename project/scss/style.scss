@@ -1,10 +1,3 @@
-*,
-*::after,
-*::before {
-    box-sizing: border-box;
-}
-
-head {
-    margin: 0;
-    padding: 0;
-}
+@import '_global';
+@import 'reset';    
+@import '_libs';
